@@ -9,7 +9,7 @@ export default function AuthRouteslayout() {
     return <Redirect href={"/(home)"} />;
   }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#5F5DEC" }}>
       <Stack>
         <Stack.Screen
           name="sign-in"
