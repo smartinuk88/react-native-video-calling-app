@@ -1,3 +1,4 @@
+import SignInWithOAuth from "@/components/SignInWithOAuth";
 import StyledButton from "@/components/StyledButton";
 import { useSignIn } from "@clerk/clerk-expo";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -99,7 +100,7 @@ export default function SignInScreen() {
 
       <Text style={{ textAlign: "center", color: "white" }}>OR</Text>
 
-      {/* <StyledButton title="Sign Up" onPress={onSignUpPress} /> */}
+      <SignInWithOAuth />
 
       {/* divider */}
       <View
