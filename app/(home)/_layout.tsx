@@ -1,6 +1,7 @@
 import { useAuth } from "@clerk/clerk-expo";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Redirect, Tabs } from "expo-router";
+import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function HomeRoutesLayout() {
   const { isSignedIn } = useAuth();
@@ -31,6 +32,44 @@ export default function HomeRoutesLayout() {
             tabBarIcon: ({ color }) => (
               <Ionicons name="call-outline" size={24} color={color} />
             ),
+          }}
+        />
+        <Tabs.Screen
+          name="[id]"
+          options={{
+            title: "Start a New Call",
+            unmountOnBlur: true,
+            header: () => null,
+            tabBarIcon: ({ color }) => {
+              return (
+                <View
+                  style={{
+                    position: "absolute",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    top: -10,
+                    left: 20,
+                    right: 20,
+                    bottom: 0,
+                    margin: "auto",
+                    borderRadius: 50,
+                    zIndex: 100,
+                    backgroundColor: "white",
+                    borderColor: "lightgray",
+                    borderWidth: 0.2,
+                    borderTopWidth: 1,
+                    borderBottomWidth: 0,
+                  }}
+                >
+                  <FontAwesome
+                    name="plus-circle"
+                    size={30}
+                    color="black"
+                    style={{ zIndex: 200 }}
+                  />
+                </View>
+              );
+            },
           }}
         />
         <Tabs.Screen
