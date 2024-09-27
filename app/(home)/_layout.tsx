@@ -32,6 +32,26 @@ export default function HomeRoutesLayout() {
     image: clerkUser.imageUrl!,
   };
 
+  const tokenProvider = async () => {
+    const response = await fetch(
+      `${process.env.EXPO_PUBLIC_API_URL}/generateUserToken`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: clerkUser.id,
+          name: clerkUser.fullName!,
+          image: clerkUser.imageUrl!,
+          email: clerkUser.primaryEmailAddress?.toString(),
+        }),
+      }
+    );
+    const data = await response.json();
+    return data.token;
+  };
+
   const client = StreamVideoClient.getOrCreateInstance({
     apiKey,
     user,
