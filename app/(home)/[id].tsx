@@ -9,6 +9,8 @@ import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, ActivityIndicator } from "react-native";
 import { generateSlug } from "random-word-slugs";
+import Toast from "react-native-root-toast";
+import { copySlug } from "@/lib/slugs";
 
 export default function CallScreen() {
   const [call, setCall] = useState<Call | null>(null);
@@ -25,7 +27,11 @@ export default function CallScreen() {
 
       const _call = client?.call("default", slug);
       _call?.join({ create: false }).then(() => {
-        // Toast popup
+        Toast.show("Joined Call Successfully!", {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.CENTER,
+          shadow: true,
+        });
         setCall(_call);
       });
     } else {
@@ -39,7 +45,17 @@ export default function CallScreen() {
       // Creating a new call
       const _call = client?.call("default", slug);
       _call?.join({ create: true }).then(() => {
-        // Toast popup
+        Toast.show(
+          "Call Created Successfully\nTap here to copy the call ID to share!",
+          {
+            duration: Toast.durations.LONG,
+            position: Toast.positions.CENTER,
+            shadow: true,
+            onPress: async () => {
+              copySlug(slug);
+            },
+          }
+        );
         setCall(_call);
       });
     }
