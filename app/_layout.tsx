@@ -1,6 +1,7 @@
 import * as SecureStore from "expo-secure-store";
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
 import { Slot } from "expo-router";
+import { RootSiblingParent } from "react-native-root-siblings";
 import "react-native-reanimated";
 
 const tokenCache = {
@@ -40,7 +41,9 @@ export default function RootLayout() {
   return (
     <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
       <ClerkLoaded>
-        <Slot />
+        <RootSiblingParent>
+          <Slot />
+        </RootSiblingParent>
       </ClerkLoaded>
     </ClerkProvider>
   );

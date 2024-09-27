@@ -1,3 +1,4 @@
+import Room from "@/components/Room";
 import {
   Call,
   CallingState,
@@ -54,7 +55,7 @@ export default function CallScreen() {
 
   return (
     <StreamCall call={call}>
-      <Text>[id]</Text>
+      <Room slug={slug} />
     </StreamCall>
   );
 }
