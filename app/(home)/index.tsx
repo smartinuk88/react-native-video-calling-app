@@ -4,7 +4,14 @@ import { Entypo, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-native-sdk";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Dialog from "react-native-dialog";
 
 export default function IndexScreen() {
@@ -56,8 +63,18 @@ export default function IndexScreen() {
     router.push(`/(home)/${id}`);
   };
 
+  const insertLineBreaks = (text: string | undefined, maxLength: number) => {
+    if (!text) return text;
+
+    const regex = new RegExp(`.{1,${maxLength}}`, "g");
+    const matches = text.match(regex);
+
+    // If no matches are found, return the original text
+    return matches ? matches.join("\n") : text;
+  };
+
   return (
-    <View>
+    <View style={{ paddingVertical: 10 }}>
       <TouchableOpacity
         style={{ position: "absolute", top: 20, right: 20, zIndex: 100 }}
         onPress={() => setDialogOpen(true)}
@@ -79,6 +96,38 @@ export default function IndexScreen() {
           }}
         />
       </Dialog.Container>
+
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 10,
+          gap: 10,
+        }}
+      >
+        <Text
+          style={{ color: isMyCalls ? "black" : "#5f5DEC" }}
+          onPress={() => setIsMyCalls(false)}
+        >
+          All Calls
+        </Text>
+
+        <Switch
+          trackColor={{ false: "#5F5DEC", true: "#5F5DEC" }}
+          thumbColor="white"
+          ios_backgroundColor="#5F5DEC"
+          onValueChange={() => setIsMyCalls(!isMyCalls)}
+          value={isMyCalls}
+        />
+
+        <Text
+          style={{ color: !isMyCalls ? "black" : "#5f5DEC" }}
+          onPress={() => setIsMyCalls(true)}
+        >
+          My Calls
+        </Text>
+      </View>
 
       <FlatList
         data={calls}
@@ -128,11 +177,15 @@ export default function IndexScreen() {
                     {item.state.createdBy?.name ||
                       item.state.createdBy?.custom.email.split("@")[0]}
                   </Text>
-                  <Text style={{ fontSize: 12 }}>
-                    {item.state.createdBy?.custom.email}
+                  <Text
+                    style={{
+                      fontSize: 12,
+                    }}
+                  >
+                    {insertLineBreaks(item.state.createdBy?.custom.email, 25)}
                   </Text>
                 </View>
-                <View>
+                <View style={{ alignItems: "flex-end", gap: 50 }}>
                   <Text
                     style={{ fontSize: 10, textAlign: "right", width: 100 }}
                   >

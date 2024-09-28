@@ -38,7 +38,7 @@ export default function JoinPage() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text style={{ padding: 20, fontWeight: "bold" }}>
-        Enter the Room N ame
+        Enter the Room Name
       </Text>
 
       <TextInput

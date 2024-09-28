@@ -7,7 +7,7 @@ import RoomId from "./RoomId";
 export default function CallRoom({ slug }: { slug: string }) {
   const router = useRouter();
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <View style={{ position: "absolute", top: 10, left: 10, zIndex: 100 }}>
         <RoomId slug={slug} />
       </View>
