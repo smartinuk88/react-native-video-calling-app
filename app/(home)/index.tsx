@@ -25,7 +25,10 @@ export default function IndexScreen() {
   const { signOut } = useAuth();
 
   const fetchCalls = async () => {
-    if (!client || !user) return;
+    if (!client || !user) {
+      console.error("Client or user is not initialized");
+      return;
+    }
 
     const { calls } = await client.queryCalls({
       filter_conditions: isMyCalls
@@ -40,6 +43,11 @@ export default function IndexScreen() {
       sort: [{ field: "created_at", direction: -1 }],
       watch: true,
     });
+
+    if (!calls) {
+      console.error("No calls found");
+      return;
+    }
 
     // Sort calls by participant count
     const sortedCalls = calls.sort((a, b) => {

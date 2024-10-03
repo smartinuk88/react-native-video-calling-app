@@ -33,23 +33,33 @@ export default function HomeRoutesLayout() {
   };
 
   const tokenProvider = async () => {
-    const response = await fetch(
-      `${process.env.EXPO_PUBLIC_API_URL}/generateUserToken`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: clerkUser.id,
-          name: clerkUser.fullName!,
-          image: clerkUser.imageUrl!,
-          email: clerkUser.primaryEmailAddress?.toString(),
-        }),
+    try {
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_API_URL}/generateUserToken`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: clerkUser.id,
+            name: clerkUser.fullName!,
+            image: clerkUser.imageUrl!,
+            email: clerkUser.primaryEmailAddress?.toString(),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    );
-    const data = await response.json();
-    return data.token;
+
+      const data = await response.json();
+      return data.token;
+    } catch (err) {
+      console.error("Error fetching token from backend:", err);
+      throw err;
+    }
   };
 
   const client = StreamVideoClient.getOrCreateInstance({
